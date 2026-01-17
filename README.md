@@ -1,2 +1,319 @@
-# Web-Devlopment
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EngiTrack | Engineering Student Dashboard</title>
+    <style>
+        /* CSS RESET & VARIABLES */
+        :root {
+            --primary: #0ea5e9;
+            --secondary: #1e293b;
+            --bg-light: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* LAYOUT STRUCTURE */
+        .app-container {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR (NAV) */
+        aside {
+            background-color: var(--secondary);
+            color: white;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 2.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: all 0.2s;
+        }
+
+        .nav-item.active, .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        /* MAIN CONTENT area */
+        main {
+            padding: 2.5rem;
+            overflow-y: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .welcome h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .welcome p {
+            color: var(--text-muted);
+        }
+
+        .action-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 14px 0 rgba(14, 165, 233, 0.39);
+        }
+
+        /* BENTO GRID SYSTEM  */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: var(--card-shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        /* TASK TABLE */
+        .task-list {
+            grid-column: span 2;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            padding-bottom: 1rem;
+        }
+
+        td {
+            padding: 1rem 0;
+            border-top: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: #f1f5f9;
+            font-weight: 700;
+        }
+
+        /* PROGRESS BARS */
+        .progress-container {
+            width: 100%;
+            background: #f1f5f9;
+            height: 6px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+        }
+
+        /* SCHEDULE CARD */
+        .schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .event {
+            display: flex;
+            gap: 1rem;
+            padding: 12px;
+            border-radius: 12px;
+            background: var(--bg-light);
+        }
+
+        .event-time {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 65px;
+        }
+
+        /* RESPONSIVE DESIGN [cite: 5] */
+        @media (max-width: 1024px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .task-list { grid-column: span 1; }
+            .app-container { grid-template-columns: 1fr; }
+            aside { display: none; } /* Mobile Menu would be implemented here */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <aside>
+            <div class="logo">ENGITRACK</div>
+            <ul class="nav-menu">
+                <li class="nav-item active">Dashboard</li>
+                <li class="nav-item">Course Modules</li>
+                <li class="nav-item">Assignment Tracker</li>
+                <li class="nav-item">Lab Journals</li>
+                <li class="nav-item">Exam Countdown</li>
+                <li class="nav-item">Settings</li>
+            </ul>
+        </aside>
+
+        <main>
+            <header>
+                <div class="welcome">
+                    <h1>Engineer's Dashboard</h1>
+                    <p>Track your assignments, labs, and exams effectively. [cite: 4]</p>
+                </div>
+                <button class="action-btn">+ Create New Task</button>
+            </header>
+
+            <div class="dashboard-grid">
+                <section class="card task-list">
+                    <div class="card-header">
+                        <span class="card-title">Current Workload</span>
+                        <span style="font-size: 0.8rem; color: var(--primary);">View Calendar →</span>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject/Task</th>
+                                <th>Category</th>
+                                <th>Deadline</th>
+                                <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Fluid Mechanics Lab Report</strong></td>
+                                <td><span class="tag">LAB</span></td>
+                                <td>Jan 20, 2026</td>
+                                <td><div class="progress-container"><div class="progress-fill" style="width: 80%;"></div></div></td>
+                            </tr>
+                            <tr>
+                                <td><strong>CAD Project - Final Assembly</strong></td>
+                                <td><span class="tag">PROJECT</span></td>
+                                <td>Feb 05, 2026</td>
+                                <td><div class="progress-container"><div class="progress-fill" style="width: 35%;"></div></div></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vector Calculus Quiz Prep</strong></td>
+                                <td><span class="tag">EXAM</span></td>
+                                <td>Jan 22, 2026</td>
+                                <td><div class="progress-container"><div class="progress-fill" style="width: 95%;"></div></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="card">
+                    <div class="card-header">
+                        <span class="card-title">Today's Lectures</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="event">
+                            <span class="event-time">09:30 AM</span>
+                            <div class="event-details">
+                                <div style="font-weight: 700; font-size: 0.9rem;">Mechatronics (L)</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Main Auditorium</div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <span class="event-time">11:00 AM</span>
+                            <div class="event-details">
+                                <div style="font-weight: 700; font-size: 0.9rem;">Heat Transfer Lab</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Workshop Wing B</div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <span class="event-time">02:30 PM</span>
+                            <div class="event-details">
+                                <div style="font-weight: 700; font-size: 0.9rem;">Engineering Ethics</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Online Seminar</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card" style="grid-column: span 1;">
+                    <div class="card-header">
+                        <span class="card-title">Quick Stats</span>
+                    </div>
+                    <div style="text-align: center; padding: 1rem 0;">
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--primary);">86%</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">Weekly Completion Rate</div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html># Web-Devlopment
 Design a Front-End
